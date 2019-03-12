@@ -25,6 +25,10 @@ public class CalculatorController {
 	private List<String> calcOperations;
 	
 	
+	@Autowired
+	private Car car;
+	
+	
 	@GetMapping("/add2/{number1}/{number2}")
 	public MathResult add2(@PathVariable int number1, @PathVariable int number2) {
 		MathResult mathResult = new MathResult();
