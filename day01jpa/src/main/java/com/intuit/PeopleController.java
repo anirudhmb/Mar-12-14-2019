@@ -60,7 +60,7 @@ public class PeopleController {
 		List<Person> persons = new ArrayList();
 		personRepository.findAll().forEach(it -> persons.add(it));
 		return persons;
-	}
+	}	
 	
 	@DeleteMapping("/{id}")
 	public String deletePerson(@PathVariable int id) {
