@@ -37,8 +37,8 @@ public class PeopleController {
 		Person person = new Person();
 		person.setName(name);
 		person.setAge(age);
-		personRepository.save(person);
-		return "Person created";
+		person = personRepository.save(person);
+		return "Person with id " + person.getId() + " is created";
 	}
 	
 	@PutMapping("/{id}/{age}")
