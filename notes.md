@@ -47,6 +47,27 @@ class Account {
 * If you want to develop something very fast, and push it to production in the JVM stack, Spring BOOT is the leader
 
 
+### @Configuration
 
+* Any class annotated with @Configuration becomes a configuration file
+* Configure beans (write methods) using @Bean annotation in this class
+
+### @RestController vs. @Controller
+
+* __@Controller__ + __@ResponseBody__ = __@RestController__
+
+* @Controller returns a __view__ information 
+* view needs to be resolved by a __ViewResolver__
+* ViewResolvers are configured explicitly
+
+
+## For DB
+
+```sql
+create database training;
+use training;
+
+create table persons( id int(4) not null primary key auto_increment, name varchar(40), age int(4));
+```
 
 
