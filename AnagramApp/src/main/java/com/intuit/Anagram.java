@@ -15,6 +15,11 @@ public class Anagram {
 		Collections.shuffle(lettersList);
 		StringBuffer sb = new StringBuffer("");
 		lettersList.forEach(it -> sb.append(it));
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return sb.toString();
 	}
 }
