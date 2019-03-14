@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.intuit.service.AnagramService;
 import com.intuit.service.PalindromeService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Controller
 public class WordController {
@@ -23,7 +25,9 @@ public class WordController {
 	
 	@PostMapping("/palindromecheck")
 	@ResponseBody
+	//@HystrixCommand(fallbackMethod="checkForPalindromeBackup")
 	public String checkForPalindrome(@RequestParam("word") String word) {
+		System.out.println("*****In actual checkForPalindrome method***");
 		boolean result = palindromeService.isPalindrome(word);
 		String message = "";
 		if(result) {
@@ -35,11 +39,25 @@ public class WordController {
 		return message;
 	}
 	
+	public String checkForPalindromeBackup(String word) {
+		System.out.println("-----In checkForPalindromeBackup method----");
+		return "Service may be temporarily down. Try later";
+	}
+	
+	
 	@PostMapping("/getanagram")
 	@ResponseBody
+	@HystrixCommand(fallbackMethod="getAnagramBackup", commandProperties = {
+			@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", 
+								value="6000")
+	})
 	public String getAnagram(@RequestParam("word") String word) {
 		String result = anagramService.getJumbledWord(word);
 		return result;
+	}
+	
+	public String getAnagramBackup(String word) {
+		return "Service is taking too much time to respond. Please try later.";
 	}
 	
 	@GetMapping("/")
