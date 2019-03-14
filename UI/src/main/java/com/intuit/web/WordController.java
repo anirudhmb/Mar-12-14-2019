@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.intuit.service.AnagramService;
 import com.intuit.service.PalindromeService;
@@ -21,22 +22,24 @@ public class WordController {
 	
 	
 	@PostMapping("/palindromecheck")
-	public String checkForPalindrome(@RequestParam("word") String word, Model model) {
+	@ResponseBody
+	public String checkForPalindrome(@RequestParam("word") String word) {
 		boolean result = palindromeService.isPalindrome(word);
+		String message = "";
 		if(result) {
-			model.addAttribute("palindromemessage", word + " is a palindrome");
+			message = word + " is a palindrome";
 		}
 		else {
-			model.addAttribute("palindromemessage", word + " is not a palindrome");
+			message = word + " is not a palindrome";
 		}
-		return "index";
+		return message;
 	}
 	
 	@PostMapping("/getanagram")
-	public String getAnagram(@RequestParam("word") String word, Model model) {
+	@ResponseBody
+	public String getAnagram(@RequestParam("word") String word) {
 		String result = anagramService.getJumbledWord(word);
-		model.addAttribute("anagrammessage", result);
-		return "index";
+		return result;
 	}
 	
 	@GetMapping("/")
