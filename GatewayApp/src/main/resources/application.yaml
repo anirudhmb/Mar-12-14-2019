@@ -1,0 +1,11 @@
+server:
+  port: 7000
+zuul:
+  prefix: /api  
+  routes:
+    palindrome:
+      path: /palin/**
+      url: http://localhost:7071/palindrome
+    anagram:
+      path: /anag/**
+      url: http://localhost:7072/anagram   
